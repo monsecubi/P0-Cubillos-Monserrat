@@ -1,26 +1,40 @@
-"""Implementación de multiplicación de matrices (versión inicial)."""
+"""Mi versión de la multiplicación de matrices, hecha a mano (sin numpy)."""
 
 
 def mimatmul(A, B):
-    """Multiplica las matrices A (m x n) y B (n x p).
+    """Multiplica dos matrices A y B usando la definición clásica.
 
-    Devuelve una matriz C (m x p) con C[i][j] = sum_k A[i][k] * B[k][j].
+    Para obtener el resultado sigo la regla de la clase: el elemento
+    (i, j) del resultado es la suma de los productos de la fila i de
+    A con la columna j de B.
     """
-    n_filas_a = len(A)
-    n_cols_a = len(A[0]) if n_filas_a else 0
-    n_filas_b = len(B)
-    n_cols_b = len(B[0]) if n_filas_b else 0
+    if not A or not B:
+        raise ValueError("Las matrices no pueden estar vacías.")
 
-    if n_cols_a != n_filas_b:
+    filas_a = len(A)
+    columnas_a = len(A[0])
+    filas_b = len(B)
+    columnas_b = len(B[0])
+
+    # Reviso que las matrices sean "rectas": todas las filas con el mismo largo.
+    if any(len(fila) != columnas_a for fila in A):
+        raise ValueError("La matriz A no es rectangular: todas sus filas deben medir lo mismo.")
+    if any(len(fila) != columnas_b for fila in B):
+        raise ValueError("La matriz B no es rectangular: todas sus filas deben medir lo mismo.")
+
+    # Condición para poder multiplicar: el ancho de A debe ser el alto de B.
+    if columnas_a != filas_b:
         raise ValueError(
-            "Las dimensiones de las matrices no son compatibles para multiplicar."
+            "No se pueden multiplicar: el ancho de A debe ser igual al alto de B."
         )
 
-    C = [[0.0 for _ in range(n_cols_b)] for _ in range(n_filas_a)]
-    for i in range(n_filas_a):
-        for j in range(n_cols_b):
-            total = 0.0
-            for k in range(n_cols_a):
-                total += A[i][k] * B[k][j]
-            C[i][j] = total
-    return C
+    resultado = []
+    for i in range(filas_a):
+        fila_resultado = []
+        for j in range(columnas_b):
+            suma = 0.0
+            for k in range(columnas_a):
+                suma += A[i][k] * B[k][j]
+            fila_resultado.append(suma)
+        resultado.append(fila_resultado)
+    return resultado
