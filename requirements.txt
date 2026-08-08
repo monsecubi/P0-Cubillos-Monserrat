@@ -1,0 +1,2 @@
+# Sin dependencias externas por ahora: el proyecto usa solo la biblioteca
+# estándar de Python. En P0E2 se agregarán numpy, matplotlib, etc.
