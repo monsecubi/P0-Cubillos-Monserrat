@@ -19,7 +19,10 @@ análisis de CPU y RAM).
 - Ejecutar las pruebas después de modificar código:
 
 ```
-python -m unittest discover -s tests -v
+pytest
 ```
+
+- El benchmark se ejecuta con `python src/benchmark.py` y genera
+  `data/benchmark_results.csv` y `figures/benchmark.png`.
 
 - Hacer commits pequeños y descriptivos directamente en `main`.
