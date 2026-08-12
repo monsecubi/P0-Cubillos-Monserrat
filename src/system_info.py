@@ -42,7 +42,8 @@ def get_physical_cores():
     return None
 
 
-def get_total_ram_bytes():
+def get_memory_status():
+    """Devuelve (ram_total_bytes, ram_libre_bytes) usando la API de Windows."""
     if sys.platform == "win32":
         class MEMORYSTATUSEX(ctypes.Structure):
             _fields_ = [
@@ -60,8 +61,18 @@ def get_total_ram_bytes():
         stat = MEMORYSTATUSEX()
         stat.dwLength = ctypes.sizeof(MEMORYSTATUSEX)
         if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(stat)):
-            return stat.ullTotalPhys
-    return None
+            return stat.ullTotalPhys, stat.ullAvailPhys
+    return None, None
+
+
+def get_total_ram_bytes():
+    total, _ = get_memory_status()
+    return total
+
+
+def get_avail_ram_bytes():
+    _, disponible = get_memory_status()
+    return disponible
 
 
 def main():
@@ -77,6 +88,7 @@ def main():
         "nucleos_fisicos": get_physical_cores(),
         "procesadores_logicos": os.cpu_count(),
         "ram_total_bytes": get_total_ram_bytes(),
+        "ram_libre_bytes": get_avail_ram_bytes(),
     }
 
     os.makedirs(DATA_DIR, exist_ok=True)

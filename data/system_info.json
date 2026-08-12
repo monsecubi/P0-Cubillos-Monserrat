@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-08-07T23:01:34",
+  "fecha": "2026-08-12T00:02:03",
   "sistema_operativo": "Windows",
   "sistema_operativo_version": "10.0.26200",
   "arquitectura": "AMD64",
@@ -9,5 +9,6 @@
   "modelo_procesador": "AMD Ryzen 5 5600U with Radeon Graphics",
   "nucleos_fisicos": 6,
   "procesadores_logicos": 12,
-  "ram_total_bytes": 7890833408
+  "ram_total_bytes": 7890833408,
+  "ram_libre_bytes": 674459648
 }
